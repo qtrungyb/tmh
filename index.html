@@ -16,19 +16,50 @@
             --gray: #5f6368;
             --border: #dadce0;
             --success: #34a853;
+            --background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            --container-bg: white;
+            --text-color: #202124;
+            --sidebar-bg: linear-gradient(160deg, var(--primary) 0%, var(--primary-dark) 100%);
+            --section-bg: #f8f9fa;
+            --section-border: #dadce0;
+            --pre-bg: #f0f4f8;
+            --pre-color: #2d3748;
+            --pre-border: var(--primary);
+        }
+        
+        .dark-mode {
+            --primary: #5a9cf8;
+            --primary-dark: #3a7acf;
+            --secondary: #1e293b;
+            --accent: #f87171;
+            --light: #1e293b;
+            --dark: #f1f5f9;
+            --gray: #94a3b8;
+            --border: #334155;
+            --success: #34d399;
+            --background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --container-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --sidebar-bg: linear-gradient(160deg, #1e3a8a 0%, #0f172a 100%);
+            --section-bg: #0f172a;
+            --section-border: #334155;
+            --pre-bg: #1e293b;
+            --pre-color: #cbd5e1;
+            --pre-border: var(--primary);
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-            color: var(--dark);
+            background: var(--background);
+            color: var(--text-color);
             min-height: 100vh;
             padding: 20px;
         }
@@ -37,16 +68,17 @@
             display: flex;
             max-width: 1400px;
             margin: 20px auto;
-            background-color: white;
+            background-color: var(--container-bg);
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             min-height: 85vh;
+            position: relative;
         }
         
         .sidebar {
             width: 300px;
-            background: linear-gradient(160deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: var(--sidebar-bg);
             color: white;
             padding: 25px 0;
             position: relative;
@@ -56,7 +88,7 @@
         .content {
             flex: 1;
             padding: 30px;
-            background-color: white;
+            background-color: var(--container-bg);
             overflow-y: auto;
             position: relative;
         }
@@ -65,10 +97,53 @@
             padding: 0 25px 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 15px;
+            text-align: center;
         }
         
         .header h1 {
             font-size: 1.6rem;
+        }
+        
+        .search-container {
+            padding: 0 20px 15px;
+        }
+        
+        #searchInput {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 14px;
+        }
+        
+        #searchInput::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .menu-items-container {
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        .menu-items-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .menu-items-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        .menu-items-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+        
+        .menu-items-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
         }
         
         .menu-item {
@@ -94,13 +169,14 @@
         .content-section {
             display: none;
             margin-bottom: 30px;
-            background: var(--light);
+            background: var(--section-bg);
             border-radius: 12px;
             padding: 25px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border);
+            border: 1px solid var(--section-border);
             position: relative;
-            padding-bottom: 70px; /* Thêm padding để chứa nút sao chép */
+            padding-bottom: 70px;
+            scroll-margin-top: 20px;
         }
         
         .content-section.active {
@@ -114,29 +190,30 @@
         }
         
         h2 {
-            color: var(--primary-dark);
+            color: var(--primary);
             padding-bottom: 15px;
             margin-bottom: 20px;
             border-bottom: 2px solid var(--border);
+            text-align: center;
         }
         
         pre {
-            background-color: #f0f4f8;
+            background-color: var(--pre-bg);
             padding: 20px;
             border-radius: 10px;
             white-space: pre-wrap;
             font-family: 'Consolas', monospace;
             font-size: 15px;
             line-height: 1.7;
-            color: #2d3748;
-            border-left: 4px solid var(--primary);
+            color: var(--pre-color);
+            border-left: 4px solid var(--pre-border);
             margin: 20px 0;
         }
         
         .copy-btn {
             position: absolute;
             bottom: 20px;
-            left: 20px; /* Di chuyển sang trái */
+            left: 20px;
             background-color: var(--primary);
             color: white;
             border: none;
@@ -161,7 +238,6 @@
             transform: translateY(0);
         }
         
-        /* Trang trí thêm cho nút sao chép */
         .copy-btn::before {
             content: "";
             position: absolute;
@@ -218,6 +294,109 @@
             margin-top: 10px;
         }
         
+        /* Mục lục */
+        .toc-container {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            width: 250px;
+            max-height: 70vh;
+            overflow-y: auto;
+            background: var(--container-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            z-index: 100;
+            display: none;
+            border: 1px solid var(--border);
+        }
+        
+        .toc-container.visible {
+            display: block;
+        }
+        
+        .toc-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            color: var(--primary);
+        }
+        
+        .toc-list {
+            list-style: none;
+        }
+        
+        .toc-item {
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .toc-item:hover {
+            color: var(--primary);
+        }
+        
+        .toc-item.active {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .toc-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 101;
+            transition: all 0.3s;
+        }
+        
+        .toc-toggle:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 101;
+            transition: all 0.3s;
+        }
+        
+        .dark-mode-toggle:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        
+        .no-results {
+            padding: 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+            display: none;
+        }
+        
         @media (max-width: 900px) {
             .container {
                 flex-direction: column;
@@ -230,6 +409,16 @@
             
             .content {
                 padding: 20px;
+            }
+            
+            .toc-container {
+                right: 20px;
+                width: 200px;
+            }
+            
+            .dark-mode-toggle {
+                top: 70px;
+                left: 20px;
             }
         }
         
@@ -244,7 +433,7 @@
             
             .content-section {
                 padding: 20px 15px;
-                padding-bottom: 60px; /* Điều chỉnh cho mobile */
+                padding-bottom: 60px;
             }
             
             pre {
@@ -256,70 +445,139 @@
                 padding: 8px 16px;
                 font-size: 14px;
             }
+            
+            .toc-container {
+                width: 180px;
+                right: 10px;
+                top: 60px;
+            }
+            
+            .toc-toggle {
+                top: 70px;
+            }
+            
+            .dark-mode-toggle {
+                top: 70px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <div class="toc-toggle" id="tocToggle">
+        <i class="fas fa-list"></i>
+    </div>
+    
+    <div class="toc-container" id="tocContainer">
+        <div class="toc-title">Mục lục</div>
+        <ul class="toc-list" id="tocList">
+            <!-- Các mục sẽ được thêm bằng JavaScript -->
+        </ul>
+    </div>
+    
     <div class="container">
         <div class="sidebar">
             <div class="header">
                 <h1>NHẬN XÉT</h1>
             </div>
-            <div class="menu-item active" data-target="chan-doan">
-                Chẩn đoán
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm chẩn đoán...">
             </div>
-            <div class="menu-item" data-target="viem-mui-di-ung">
-                Viêm mũi dị ứng
+            <div class="menu-items-container">
+                <div class="no-results" id="noResults">Không tìm thấy kết quả</div>
+                <div class="menu-item active" data-target="chan-doan">
+                    Chẩn đoán
+                </div>
+                <div class="menu-item" data-target="viem-mui-di-ung">
+                    Viêm mũi dị ứng
+                </div>
+                <div class="menu-item" data-target="viem-mui-xoang-cap">
+                    Viêm mũi xoang cấp
+                </div>
+                <div class="menu-item" data-target="viem-mui-hong-cap">
+                    Viêm mũi họng cấp
+                </div>
+                <div class="menu-item" data-target="viem-hong-man">
+                    Viêm họng mãn - GERD
+                </div>
+                <div class="menu-item" data-target="tmh-binh-thuong">
+                    TMH bình thường
+                </div>
+                <div class="menu-item" data-target="viem-tai-giua-u-mu">
+                    Viêm tai giữa ứ mủ
+                </div>
+                <div class="menu-item" data-target="viem-tai-ngoai">
+                    Viêm tai ngoài 2 bên
+                </div>
+                <div class="menu-item" data-target="ket-luan-1">
+                    Viêm Amidan cấp
+                </div>
+                <div class="menu-item" data-target="xu-tri">
+                    Xử trí CK TMH & TMH
+                </div>
+                <div class="menu-item" data-target="viem-mui-hong-cap1">
+                    Chẩn đoán : Viêm mũi họng cấp 
+                </div>
+                
+                <div class="menu-item" data-target="viem-mui-hong-cap-treem">
+                    Chẩn đoán : Viêm mũi họng cấp - TE
+                </div>
+                
+                <div class="menu-item" data-target="viem-hong-thanh-quan-cap-nguoilon">
+                    Chẩn đoán : Viêm họng - thanh quản cấp (người lớn)
+                </div>
+                
+                <div class="menu-item" data-target="viem-mui-hong-phe-quan-cap-NL">
+                    Chẩn đoán : Viêm mũi họng / viêm PQ cấp người lớn
+                </div>
+                
+                <div class="menu-item" data-target="viem-mui-hong-phe-quan-cap-TE">
+                    Chẩn đoán : Viêm mũi họng / viêm PQP trẻ em
+                </div>
+                
+                <div class="menu-item" data-target="viem-hong-mui-di-ung-NL">
+                    Chẩn đoán: Viêm họng/ viêm mũi dị ứng (người lớn)
+                </div>
+                
+                <div class="menu-item" data-target="viem-mui-xoang-cap1">
+                    Chẩn đoán: Viêm mũi xoang cấp 
+                </div>
+                
+                <div class="menu-item" data-target="viem-tai-giua-cap-mu">
+                    Chẩn đoán: Viêm tai giữa cấp mủ ( người lớn)
+                </div>
+                
+                <div class="menu-item" data-target="viem-tai-giua-mu-man">
+                    Chẩn đoán : Viêm mũi xoang / viêm tai giữa mủ mãn ( Người lớn)
+                </div>
+                
+                <div class="menu-item" data-target="viem-tai-giua-cap-mu-TE">
+                    Chẩn đoán:Viêm mũi họng / Viêm tai giữa cấp mủ ( TE)
+                </div>
+                
+                <div class="menu-item" data-target="viem-mui-hong-tai-giua-pqp-TE">
+                    Chẩn đoán:Viêm mũi họng / Viêm tai giữa cấp ứ  mủ ( TE)/Viêm PQP
+                </div>
+                
+                <div class="menu-item" data-target="viem-tai-ngoai-cap">
+                    Chẩn đoán : Viêm tai ngoài cấp nhiễm trùng
+                </div>
+                
+                <div class="menu-item" data-target="viem-amidan-man">
+                    Chẩn đoán: Viêm amidan mãn tính
+                </div>
+                
+                <div class="menu-item" data-target="ro-luan-nhi">
+                    Chẩn đoán : Rò luân nhĩ ( rò khe mang)
+                </div>
+                
+                <div class="menu-item" data-target="dinh-phanh-luoi">
+                    Chẩn đoán: Dính phanh lưỡi độ II ( Dính thắng lưỡi)
+                </div>
             </div>
-            <div class="menu-item" data-target="viem-mui-xoang-cap">
-                Viêm mũi xoang cấp
-            </div>
-            <div class="menu-item" data-target="viem-mui-hong-cap">
-                Viêm mũi họng cấp
-            </div>
-            <div class="menu-item" data-target="viem-hong-man">
-                Viêm họng mãn - GERD
-            </div>
-            <div class="menu-item" data-target="tmh-binh-thuong">
-                TMH bình thường
-            </div>
-            <div class="menu-item" data-target="viem-tai-giua-u-mu">
-                Viêm tai giữa ứ mủ
-            </div>
-            <div class="menu-item" data-target="viem-tai-ngoai">
-                Viêm tai ngoài 2 bên
-            </div>
-            <div class="menu-item" data-target="ket-luan-1">
-                Viêm Amidan cấp
-            </div>
-            <div class="menu-item" data-target="xu-tri">
-                Xử trí CK TMH & TMH
-            </div>
-			<div class="menu-item" data-target="viem-mui-hong-cap1">
-                Chẩn đoán : Viêm mũi họng cấp 
-            </div>
-			
-			<div class="menu-item" data-target="viem-mui-hong-cap-treem">
-                Chẩn đoán : Viêm mũi họng cấp - TE
-            </div>
-			
-			
-			<div class="menu-item" data-target="viem-hong-thanh-quan-cap-nguoilon">
-                Chẩn đoán : Viêm họng – thanh quản cấp ( người lớn)
-            </div>
-			
-			<div class="menu-item" data-target="viem-mui-hong-phe-quan-cap-NL">
-                Chẩn đoán : Viêm mũi họng / viêm PQ cấp người lớn
-            </div>
-			
-			<div class="menu-item" data-target="viem-mui-hong-phe-quan-cap-TE">
-                Chẩn đoán : Viêm mũi họng / viêm PQP trẻ em
-            </div>
-			
-			<div class="menu-item" data-target="viem-hong-mui-di-ung-NL">
-                Chẩn đoán: Viêm họng/ viêm mũi dị ứng (người lớn)
-            </div>
-			
         </div>
 
         <div class="content">
@@ -420,44 +678,100 @@ J35.2(Phì đại VA)
 R07.0(Đau tại họng)</pre>
                 <button class="copy-btn" data-target="chan-doan"><i class="fas fa-copy"></i> Sao chép</button>
             </div>
-			
-			<div id="viem-mui-hong-cap1" class="content-section">
+            
+            <div id="viem-mui-hong-cap1" class="content-section">
                 <h2>Viêm mũi họng cấp </h2>
                 <pre>Bệnh nhân đau họng, ho , sốt, chảy mũi, ngạt mũi ở nhà 03 ngày nay, đã tự mua thuốc uống nhưng không đỡ, nay đau họng tăng, ho tăng, tức ngực sau ho nhiều, chảy mũi nhiều, mệt mỏi, ăn kém,   vào khám.</pre>
                 <button class="copy-btn" data-target="viem-mui-hong-cap1"><i class="fas fa-copy"></i> Sao chép</button>
             </div>
-			
-			<div id="viem-mui-hong-cap-treem" class="content-section">
+            
+            <div id="viem-mui-hong-cap-treem" class="content-section">
                 <h2>Viêm mũi họng cấp - TE</h2>
                 <pre>Trẻ xuất hiện ho, khò khứ nhiều, chảy mũi nhiều, ngạt mũi, quấy khóc nhiều, ở nhà mẹ tự mua thuốc cho trẻ uống nhưng không đỡ, nay trẻ ho tăng, khò khứ tăng,ngạt mũi kèm quấy khóc tăng, ăn kém, thi thoảng nôn trớ sau ăn, mệt mỏi nhiều, vào khám.</pre>
                 <button class="copy-btn" data-target="viem-mui-hong-cap-treem"><i class="fas fa-copy"></i> Sao chép</button>
             </div>
-			
-			<div id="viem-hong-thanh-quan-cap-nguoilon" class="content-section">
-                <h2>Viêm họng – thanh quản cấp ( người lớn)</h2>
+            
+            <div id="viem-hong-thanh-quan-cap-nguoilon" class="content-section">
+                <h2>Viêm họng - thanh quản cấp (người lớn)</h2>
                 <pre>Bệnh nhân ho, đau họng, khàn đặc tiếng ở nhà 03 ngày, tự mua thuốc uống nhưng không đỡ, nay đau họng , ho tăng, khàn đạc tiếng, nói khó, thi thoảng hụt hơi, mệt, ăn kém, vào khám.</pre>
                 <button class="copy-btn" data-target="viem-hong-thanh-quan-cap-nguoilon"><i class="fas fa-copy"></i> Sao chép</button>
             </div>
-			
-			<div id="viem-mui-hong-phe-quan-cap-NL" class="content-section">
+            
+            <div id="viem-mui-hong-phe-quan-cap-NL" class="content-section">
                 <h2>Viêm mũi họng/ Viêm PQ cấp người lớn</h2>
                 <pre>Bệnh nhân đau họng, ho , sốt, tức ngực nhiều sau ho ở nhà 03 ngày nay, thi thoảng cảm giác nặng ngực, khó thở ,đã tự mua thuốc uống nhưng không đỡ, nay đau họng tăng, ho tăng, tức ngực sau ho nhiều, chảy mũi nhiều, mệt mỏi, ăn kém,  vào khám.</pre>
                 <button class="copy-btn" data-target="viem-mui-hong-phe-quan-cap-NL"><i class="fas fa-copy"></i> Sao chép</button>
             </div>
-			
-			<div id="viem-mui-hong-phe-quan-cap-TE" class="content-section">
+            
+            <div id="viem-mui-hong-phe-quan-cap-TE" class="content-section">
                 <h2>Viêm mũi họng/ Viêm PQP trẻ em</h2>
                 <pre>Trẻ xuất hiện ho, khò khứ nhiều, chảy mũi nhiều, ngạt mũi, quấy khóc nhiều, ở nhà mẹ tự mua thuốc cho trẻ uống nhưng không đỡ, nay trẻ ho tăng, khò khứ tăng,ngạt mũi kèm quấy khóc tăng, ăn kém, thi thoảng nôn trớ sau ăn, mệt mỏi nhiều, vào khám.</pre>
                 <button class="copy-btn" data-target="viem-mui-hong-phe-quan-cap-TE"><i class="fas fa-copy"></i> Sao chép</button>
             </div>
-			
-			
-			<div id="viem-hong-mui-di-ung-NL" class="content-section">
+            
+            <div id="viem-hong-mui-di-ung-NL" class="content-section">
                 <h2>Viêm họng/ Viêm mũi dị ứng người lớn</h2>
                 <pre>Bệnh nhân đau họng, nuốt rát vùng họng,ho ngứa họng, hắt hơi, ngứa mũi chảy dịch mũi trong nhiều, ngạt mũi nhiều, chưa dùng thuốc gì, nay các triệu chứng trên tăng dần, rát họng nhiều hơn, ngạt chảy mũi ,ngứa mũi tăng,mệt mỏi, ăn kém,  vào khám.</pre>
                 <button class="copy-btn" data-target="viem-hong-mui-di-ung-NL"><i class="fas fa-copy"></i> Sao chép</button>
             </div>
-			
+            
+            <div id="viem-mui-xoang-cap1" class="content-section">
+                <h2>Viêm mũi xoang cấp</h2>
+                <pre>Bệnh nhân đau nhức vùng mũi lan lên trán,chảy mũi đục nhiều,ngạt mũi 2 bên , thi thoảng ù tai ,ở nhà chưa dùng thuốc gì , nay đau nhức vùng mũi tăng, chảy mũi đục và ngạt mũi tăng, mệt mỏi, ăn kém,  vào khám.</pre>
+                <button class="copy-btn" data-target="viem-mui-xoang-cap1"><i class="fas fa-copy"></i> Sao chép</button>
+            </div>
+            
+            <div id="viem-tai-giua-cap-mu" class="content-section">
+                <h2>Viêm tai giữa cấp mủ</h2>
+                <pre>Bệnh nhân đau nhức vùng tai nhiều, ù tai nghe kém, chảy mủ tai nhiều, chưa dùng thuốc gì, nay chảy mủ tai,đau kèm ù tai tăng, vào khám.</pre>
+                <button class="copy-btn" data-target="viem-tai-giua-cap-mu"><i class="fas fa-copy"></i> Sao chép</button>
+            </div>
+            
+            
+            <div id="viem-tai-giua-mu-man" class="content-section">
+                <h2>Viêm mũi xoang / viêm tai giữa mủ mãn</h2>
+                <pre>Bệnh nhân đau nhức vùng mũi lan lên trán,chảy mũi đục nhiều,ngạt mũi 2 bên , thi thoảng ù tai , đau nhức vùng tai nhiều, ù tai nghe kém, chảy mủ tai nhiều, chưa dùng thuốc gì,ở nhà chưa dùng thuốc gì , nay đau nhức vùng mũi tăng, chảy mũi đục và ngạt mũi tăng,chảy mủ tai,đau kèm ù tai tăng, mệt mỏi, ăn kém, vào khám.</pre>
+                <button class="copy-btn" data-target="viem-tai-giua-mu-man"><i class="fas fa-copy"></i> Sao chép</button>
+            </div>
+            
+            
+            <div id="viem-tai-giua-cap-mu-TE" class="content-section">
+                <h2>Viêm mũi họng / Viêm tai giữa cấp mủ ( TE)</h2>
+                <pre>Trẻ ho, sốt,chảy mũi đục nhiều, đau nhức vùng tai 2 bên , chảy mủ tai nhiều, chưa dùng thuốc gì, nay chảy mủ tai,đau  họng ,sốt tăng, mệt mỏi, ăn kém vào khám.</pre>
+                <button class="copy-btn" data-target="viem-tai-giua-cap-mu-TE"><i class="fas fa-copy"></i> Sao chép</button>
+            </div>
+            
+            <div id="viem-mui-hong-tai-giua-pqp-TE" class="content-section">
+                <h2>Viêm mũi họng / Viêm tai giữa cấp ứ  mủ ( TE)/Viêm PQP</h2>
+                <pre>Trẻ ho, khò khứ nhiều,sốt,chảy mũi đục nhiều, đau nhức vùng tai 2 bên ,dụi tai nhiều,quấy khóc mỗi khki dụi tai , ở nhà tự mua thuốc uống cho trẻ nhưng không đỡ, nay sốt kèm ho,khò khứ tăng, đau  tai dụi tai nhiều,quấy khóc nhiều, mệt mỏi, ăn kém vào khám.</pre>
+                <button class="copy-btn" data-target="viem-mui-hong-tai-giua-pqp-TE"><i class="fas fa-copy"></i> Sao chép</button>
+            </div>
+            
+            <div id="viem-tai-ngoai-cap" class="content-section">
+                <h2>Viêm tai ngoài cấp nhiễm trùng</h2>
+                <pre>Bệnh nhân đau nhức vùng ống tai và mang  tai nhiều, ù tai nghe kém, chảy dịch ống tai nhiều, chưa dùng thuốc gì, nay chảy dịch  tai,đau kèm ù tai tăng, ăn nhai đau nhức nhiều vùng mang tai tương ứng bên tai đau, vào khám.</pre>
+                <button class="copy-btn" data-target="viem-tai-ngoai-cap"><i class="fas fa-copy"></i> Sao chép</button>
+            </div>
+            
+            
+            <div id="viem-amidan-man" class="content-section">
+                <h2>Viêm amidan mãn tính</h2>
+                <pre>Bệnh nhân thường xuyên bị viêm amidan ,đau họng nhiều lần trong năm ( > 5 lần/ năm, trong 3 năm liên tục), mỗi lần đau họng , sốt đều đi khám và uống thuốc liên tục nhưng chỉ đỡ, sau 1 thời gian tái viêm. Nay bệnh nhân vào viện phẫu thuật cắt amidan theo hẹn.</pre>
+                <button class="copy-btn" data-target="viem-amidan-man"><i class="fas fa-copy"></i> Sao chép</button>
+            </div>
+            
+            
+            <div id="ro-luan-nhi" class="content-section">
+                <h2>Rò luân nhĩ (rò khe mang)</h2>
+                <pre>Bệnh nhân có lỗ rò khe mang bẩm sinh vùng cực trên gờ luân, trước trên mang tai ,thi thoảng chảy dịch mùi hôi, nay vào viện bóc đường rò luân nhĩ theo hẹn.</pre>
+                <button class="copy-btn" data-target="ro-luan-nhi"><i class="fas fa-copy"></i> Sao chép</button>
+            </div>
+            
+            <div id="dinh-phanh-luoi" class="content-section">
+                <h2>Dính phanh lưỡi độ II ( Dính thắng lưỡi)</h2>
+                <pre>Bệnh nhân dính phanh lưỡi bẩm sinh, nay vào viện cắt phanh lưỡi theo hẹn.</pre>
+                <button class="copy-btn" data-target="dinh-phanh-luoi"><i class="fas fa-copy"></i> Sao chép</button>
+            </div>
         </div>
     </div>
     
@@ -465,13 +779,89 @@ R07.0(Đau tại họng)</pre>
         <i class="fas fa-check-circle"></i>
         <span>Đã sao chép vào clipboard!</span>
     </div>
-    
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuItems = document.querySelectorAll('.menu-item');
             const copyButtons = document.querySelectorAll('.copy-btn');
             const copyToast = document.getElementById('copyToast');
+            const tocToggle = document.getElementById('tocToggle');
+            const tocContainer = document.getElementById('tocContainer');
+            const tocList = document.getElementById('tocList');
+            const searchInput = document.getElementById('searchInput');
+            const noResults = document.getElementById('noResults');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const darkModeIcon = darkModeToggle.querySelector('i');
+            
+            // Kiểm tra chế độ tối từ localStorage
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+            }
+            
+            // Tạo mục lục
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                const title = section.querySelector('h2').textContent;
+                const id = section.id;
+                
+                const li = document.createElement('li');
+                li.className = 'toc-item';
+                li.textContent = title;
+                li.setAttribute('data-target', id);
+                
+                li.addEventListener('click', function() {
+                    // Cuộn đến phần tương ứng
+                    document.getElementById(id).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Cập nhật menu bên trái
+                    menuItems.forEach(item => item.classList.remove('active'));
+                    const correspondingMenuItem = document.querySelector(`.menu-item[data-target="${id}"]`);
+                    if (correspondingMenuItem) {
+                        correspondingMenuItem.classList.add('active');
+                    }
+                    
+                    // Cập nhật hiển thị phần nội dung
+                    document.querySelectorAll('.content-section').forEach(s => {
+                        s.classList.remove('active');
+                    });
+                    section.classList.add('active');
+                });
+                
+                tocList.appendChild(li);
+            });
+            
+            // Bật/tắt mục lục
+            tocToggle.addEventListener('click', function() {
+                tocContainer.classList.toggle('visible');
+            });
+            
+            // Highlight mục lục khi cuộn
+            window.addEventListener('scroll', function() {
+                const fromTop = window.scrollY + 100;
+                
+                // Tìm section hiện tại
+                let currentSection = null;
+                document.querySelectorAll('.content-section').forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    
+                    if (fromTop >= sectionTop && fromTop < sectionTop + sectionHeight) {
+                        currentSection = section.id;
+                    }
+                });
+                
+                // Cập nhật highlight trong mục lục
+                document.querySelectorAll('.toc-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-target') === currentSection) {
+                        item.classList.add('active');
+                    }
+                });
+            });
             
             // Set active menu item
             menuItems.forEach(item => {
@@ -490,6 +880,11 @@ R07.0(Đau tại họng)</pre>
                     // Show selected content section
                     const targetId = this.getAttribute('data-target');
                     document.getElementById(targetId).classList.add('active');
+                    
+                    // Cuộn đến phần được chọn
+                    document.getElementById(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 });
             });
             
@@ -514,6 +909,50 @@ R07.0(Đau tại họng)</pre>
                         alert('Không thể sao chép nội dung. Vui lòng thử lại.');
                     });
                 });
+            });
+            
+            // Chức năng tìm kiếm
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                let found = false;
+                
+                menuItems.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        found = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                noResults.style.display = found ? 'none' : 'block';
+            });
+            
+            // Chức năng chế độ tối
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    darkModeIcon.classList.remove('fa-moon');
+                    darkModeIcon.classList.add('fa-sun');
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    darkModeIcon.classList.remove('fa-sun');
+                    darkModeIcon.classList.add('fa-moon');
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Cuộn mượt khi trang tải
+            window.addEventListener('load', function() {
+                if (window.location.hash) {
+                    const targetId = window.location.hash.substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
             });
         });
     </script>
